@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+      - ./entrypoint.sh:/entrypoint.sh
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: always
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+    networks:
+      - data-network
+
+  rag:
+    build:
+      context: rag
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - ollama
+    networks:
+      - data-network
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - rag
+    networks:
+      - data-network
+
+networks:
+  data-network:
+    driver: bridge
