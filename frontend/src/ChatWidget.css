@@ -1,0 +1,93 @@
+.chat-widget {
+  position: fixed; /* Fixes the widget to the viewport */
+  bottom: 20px; /* Distance from bottom */
+  right: 20px; /* Distance from right */
+  width: 350px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  animation: slideIn 0.3s ease-in-out; /* Animation for appearance */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.message {
+  margin-bottom: 15px;
+}
+
+.message p {
+  margin: 5px 0;
+}
+
+/* User message styles */
+.user-message {
+  background-color: #e1f5fe; /* Light blue for user messages */
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 70%; /* Limit width for better alignment */
+}
+
+/* Bot message styles */
+.bot-message {
+  background-color: #ffe0b2; /* Light orange for bot messages */
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 70%; /* Limit width for better alignment */
+  margin-left: auto; /* Align bot messages to the right */
+}
+
+/* Input area styles */
+.input-area {
+  display: flex;
+  padding: 10px;
+}
+
+.input-area input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.input-area button {
+  padding: 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+}
+
+.input-area button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.loading-indicator {
+    text-align: center;
+    font-style: italic; 
+    color: #007bff; /* Match loading indicator with button color */
+    margin-top: -10px; /* Adjust position slightly */
+}

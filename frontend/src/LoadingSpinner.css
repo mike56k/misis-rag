@@ -2,8 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
-    /* Adjust height as needed */
 }
 
 .spinner {
@@ -12,9 +10,9 @@
     border-top: 8px solid #3498db;
     /* Blue */
     border-radius: 50%;
-    width: 50px;
+    width: 15px;
     /* Size of the spinner */
-    height: 50px;
+    height: 15px;
     /* Size of the spinner */
     animation: spin 1s linear infinite;
     /* Animation */
