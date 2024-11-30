@@ -26,6 +26,9 @@ services:
       - ollama
     networks:
       - data-network
+    volumes:
+      - ./rag/app/chroma:/rag/app/chroma
+      - ./rag/app/data:/rag/app/data
 
   frontend:
     build:

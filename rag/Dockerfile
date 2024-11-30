@@ -1,12 +1,11 @@
 FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR /rag
 
-COPY requirements.txt .
+ADD ./ /rag
 
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
 
 EXPOSE 8000
 

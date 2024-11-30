@@ -8,8 +8,8 @@ from langchain.schema.document import Document
 from langchain.vectorstores.chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-CHROMA_PATH = "/app/app/chroma"
-DATA_PATH = "/app/app/data"
+DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
+CHROMA_PATH = os.path.join(os.path.dirname(__file__), "chroma", "chroma")
 
 
 def populate_database():

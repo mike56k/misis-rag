@@ -1,20 +1,16 @@
-import argparse
+import os
 
 from app.get_embedding_function import get_embedding_function
 from langchain.prompts import ChatPromptTemplate
 from langchain.vectorstores.chroma import Chroma
 from langchain_community.llms.ollama import Ollama
 
-CHROMA_PATH = "/app/app/chroma"
+CHROMA_PATH = os.path.join(os.path.dirname(__file__), "chroma", "chroma")
 
 PROMPT_TEMPLATE = """
-Отвечай на вопрос основываясь только на следующем контексте:
+Отвечай на вопрос "{question}" на русском языке основываясь на следующем контексте:
 
 {context}
-
----
-
-Ответь на вопрос, основываясь на контексте выше: {question}
 """
 
 
@@ -29,7 +25,8 @@ def query_rag(query_text: str):
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=query_text)
-    # print(prompt)
+    print("PROMPT:")
+    print(prompt)
 
     model = Ollama(model="mistral", base_url="http://ollama:11434")
     response_text = model.invoke(prompt)
