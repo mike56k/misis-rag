@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.populate_database import populate_database
 from app.query_data import query_rag
 from pydantic import BaseModel
+from app.parser import crawl
 
 
 class QuestionRequest(BaseModel):
@@ -18,7 +19,10 @@ async def read_root():
 
 @app.get("/fill_database")
 async def fill_database():
+    crawl("http://misis.ru")
+
     populate_database()
+
     return "Populated"
 
 

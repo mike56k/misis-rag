@@ -3,13 +3,12 @@ import os
 import shutil
 
 from app.get_embedding_function import get_embedding_function
-from langchain.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain.schema.document import Document
 from langchain.vectorstores.chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from app.path import DATA_PATH, CHROMA_PATH
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
-CHROMA_PATH = os.path.join(os.path.dirname(__file__), "chroma", "chroma")
+from langchain_community.document_loaders import DirectoryLoader, BSHTMLLoader
 
 
 def populate_database():
@@ -29,8 +28,12 @@ def populate_database():
 
 
 def load_documents():
-    document_loader = PyPDFDirectoryLoader(DATA_PATH)
-    return document_loader.load()
+    loader = DirectoryLoader(
+        path=DATA_PATH,
+        loader_cls=BSHTMLLoader,
+        recursive=False,  # Set to True if you want to load from subdirectories
+    )
+    return loader.load()
 
 
 def split_documents(documents: list[Document]):
