@@ -28,7 +28,7 @@ def query_rag(query_text: str):
     print("PROMPT:")
     print(prompt)
 
-    model = Ollama(model="mistral", base_url="http://ollama:11434")
+    model = Ollama(model="llama3", base_url="http://ollama:11434")
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
