@@ -1,8 +1,9 @@
+from app.path import DATA_PATH
 import requests
 from bs4 import BeautifulSoup
 import os
 import logging
-from app.path import DATA_PATH
+import csv
 
 # Настройка логирования
 logging.basicConfig(
@@ -10,9 +11,8 @@ logging.basicConfig(
 )
 
 # Устанавливаем корневой URL и создаем множество для отслеживания посещенных страниц
-# root_url = "http://misis.ru"
-visited = set()
 root_url = "http://misis.ru"
+visited = set()
 
 
 def save_page(url):
@@ -27,6 +27,20 @@ def save_page(url):
         filepath = os.path.join(DATA_PATH, filename)  # Путь к файлу в папке data
         with open(filepath, "w", encoding="utf-8") as file:
             file.write(response.text)
+
+        # Открываем файл для записи соотношения имени файла и URL в формате CSV
+        mapping_file_path = os.path.join(DATA_PATH, "file_mapping.csv")
+
+        # Проверяем, существует ли файл, чтобы не записывать заголовки повторно
+        file_exists = os.path.isfile(mapping_file_path)
+
+        with open(mapping_file_path, "a", newline="", encoding="utf-8") as mapping_file:
+            csv_writer = csv.writer(mapping_file)
+            # Записываем заголовки только если файл новый
+            if not file_exists:
+                csv_writer.writerow(["filename", "url"])
+            csv_writer.writerow([filename, url])  # Записываем соотношение
+
         logging.info(f"Сохранена страница: {filepath}")
     else:
         logging.error(f"Ошибка при доступе к {url}: {response.status_code}")

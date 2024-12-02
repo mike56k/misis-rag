@@ -2,7 +2,8 @@ from app.get_embedding_function import get_embedding_function
 from langchain.prompts import ChatPromptTemplate
 from langchain.vectorstores.chroma import Chroma
 from langchain_community.llms.ollama import Ollama
-
+from app.get_url_from_filename import get_url_from_filename
+import os
 from app.path import CHROMA_PATH
 
 
@@ -31,6 +32,23 @@ def query_rag(query_text: str):
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
+    processed_sources = []
+
+    # Извлечение названий файлов и получение URL
+    for path in sources:
+        # Извлекаем имя файла (предполагаем, что оно всегда в начале строки до первого ':')
+        filename = os.path.basename(path.split(":")[0])
+
+        # Получаем URL по имени файла
+        url = get_url_from_filename(filename)
+
+        # Сохраняем результат в словаре
+        processed_sources.append(url)
+
+    result_sources_urls_string = "\n".join(processed_sources)
+
+    formatted_response = (
+        f"Ответ: {response_text}\n\nИсточники: {result_sources_urls_string}"
+    )
     print(formatted_response)
     return formatted_response
