@@ -9,7 +9,7 @@ pid=$!
 sleep 5
 
 echo "🔴 Retrieve models..."
-ollama pull nomic-embed-text:latest
+ollama pull mxbai-embed-large:latest
 ollama pull mistral:latest
 echo "🟢 Done!"
 

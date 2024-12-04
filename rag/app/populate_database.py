@@ -23,6 +23,8 @@ def populate_database():
     # # Create (or update) the data store.
     clear_database()
     documents = load_documents()
+    print(documents)
+
     chunks = split_documents(documents)
     add_to_chroma(chunks)
 
@@ -37,12 +39,7 @@ def load_documents():
 
 
 def split_documents(documents: list[Document]):
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
-        chunk_overlap=80,
-        length_function=len,
-        is_separator_regex=False,
-    )
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000)
     return text_splitter.split_documents(documents)
 
 
