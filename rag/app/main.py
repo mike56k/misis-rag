@@ -19,7 +19,7 @@ async def read_root():
 
 @app.get("/fill_database")
 async def fill_database():
-    crawl("http://misis.ru")
+    # crawl("http://misis.ru")
 
     populate_database()
 
